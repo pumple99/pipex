@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seunghoy <seunghoy@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:09:57 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/02/27 16:29:52 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:18:31 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h> //access
 #include <stdlib.h> //free
+#include <unistd.h> //execve
 #include "../libft/libft.h" //ft_strncmp, ft_split
 #include "../pipex.h" //parse_cmd
 
@@ -38,18 +38,36 @@ static char	*char_join(char *s1, char *s2, char c)
 	return (sj);
 }
 
+static char	**empty_path(void)
+{
+	char	**path;
+
+	path = (char **)malloc(sizeof(char *) * 2);
+	path[0] = (char *)malloc(sizeof(char));
+	path[1] = 0;
+	path[0][0] = 0;
+	return (path);
+}
+
 char	**get_path(char **envp)
 {
-	int	idx;
+	int		idx;
+	int		is_path_exist;
 
 	idx = 0;
+	is_path_exist = 0;
 	while (envp[idx])
 	{
 		if (ft_strncmp(envp[idx], "PATH=", 5) == 0)
+		{
+			is_path_exist = 1;
 			break ;
+		}
 		++idx;
 	}
-	return (ft_split(envp[idx] + 5, ':'));
+	if (is_path_exist)
+		return (ft_split(envp[idx] + 5, ':'));
+	return (empty_path());
 }
 
 void	exe_if_possible(char **parsed_cmd, char **path, char *envp[])
@@ -61,7 +79,7 @@ void	exe_if_possible(char **parsed_cmd, char **path, char *envp[])
 	while (path[++idx])
 	{
 		temp = check_malloc(char_join(path[idx], parsed_cmd[0], '/'));
-		if (access(temp, X_OK) == 0)
+		if (check_access(temp) == 0)
 			execve(temp, parsed_cmd, envp);
 		free(temp);
 	}

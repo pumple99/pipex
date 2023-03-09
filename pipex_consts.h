@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   pipex_consts.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 17:23:38 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/08 19:59:40 by seunghoy         ###   ########.fr       */
+/*   Created: 2023/03/09 16:29:56 by seunghoy          #+#    #+#             */
+/*   Updated: 2023/03/09 16:34:59 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h> //exit
-#include <unistd.h> //write
-#include "../libft/libft.h"
+#ifndef PIPEX_CONSTS_H
+# define PIPEX_CONSTS_H
 
-int	err_exit(char *str)
-{
-	write(2, str, ft_strlen(str));
-	exit(EXIT_FAILURE);
-	return (0);
-}
+# define STDIN 0
+# define STDOUT 1
+# define CMD_NOT_FOUND 127
+# define PERMISSION_DENIED 126
+# define CMD_NOT_FOUND_STR "command not found"
+
+#endif

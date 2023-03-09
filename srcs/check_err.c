@@ -60,7 +60,7 @@ void	check_open_fd(char *path, int fd)
 {
 	if (fd != -1)
 		return ;
-	fd_printf(2, "bash: %s", path);
+	fd_printf(2, "bash: %s: ", path);
 	perror("");
 	exit(EXIT_FAILURE);
 }

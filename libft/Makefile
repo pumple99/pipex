@@ -13,6 +13,7 @@
 NAME := libft.a
 CC := cc
 CFLAGS := -Werror -Wall -Wextra
+DEBUG_FLAGS := -g
 SRCS := ft_isalpha.c \
        ft_memcpy.c \
        ft_strlcpy.c \
@@ -75,7 +76,7 @@ $(NAME) : $(OBJS)
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(DEBUG_FLAGS) -c $<
 
 clean :
 	rm -rf $(OBJS) $(DEPS)
