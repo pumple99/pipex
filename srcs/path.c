@@ -6,13 +6,15 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:09:57 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 18:18:31 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:53:00 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h> //open
 #include <stdlib.h> //free
 #include <unistd.h> //execve
 #include "../libft/libft.h" //ft_strncmp, ft_split
+#include "../libft/gnl.h" //get_next_line
 #include "../pipex.h" //parse_cmd
 
 static char	*char_join(char *s1, char *s2, char c)
@@ -38,21 +40,41 @@ static char	*char_join(char *s1, char *s2, char c)
 	return (sj);
 }
 
-static char	**empty_path(void)
+static void	make_default_path(void)
 {
-	char	**path;
+	char	*bash_args[4];
 
-	path = (char **)malloc(sizeof(char *) * 2);
-	path[0] = (char *)malloc(sizeof(char));
-	path[1] = 0;
-	path[0][0] = 0;
-	return (path);
+	bash_args[0] = "bash";
+	bash_args[1] = "-c";
+	bash_args[2] = "echo $PATH > .tmp";
+	bash_args[3] = 0;
+	execve("/bin/bash", bash_args, 0);
+	exit(EXIT_FAILURE);
+}
+
+static char	*default_path(void)
+{
+	pid_t	pid;
+	int		fd;
+	char	*temp;
+
+	pid = fork();
+	if (pid == 0)
+		make_default_path();
+	wait(0);
+	fd = open(".tmp", O_RDONLY);
+	temp = get_next_line(fd);
+	close(fd);
+	unlink(".tmp");
+	return (temp);
 }
 
 char	**get_path(char **envp)
 {
 	int		idx;
 	int		is_path_exist;
+	char	**re;
+	char	*temp;
 
 	idx = 0;
 	is_path_exist = 0;
@@ -67,7 +89,10 @@ char	**get_path(char **envp)
 	}
 	if (is_path_exist)
 		return (ft_split(envp[idx] + 5, ':'));
-	return (empty_path());
+	temp = default_path();
+	re = ft_split(temp, ':');
+	free(temp);
+	return (re);
 }
 
 void	exe_if_possible(char **parsed_cmd, char **path, char *envp[])

@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:18:45 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 17:58:54 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:04:19 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	work(char *argv[], char *envp[], t_all *all)
 	char	**path;
 	char	**parsed_cmd;
 
-	path = check_malloc2(get_path(envp));
+	path = all->path;
 	parsed_cmd = check_malloc2(parse_cmd(argv[all->child_idx]));
 	exe_if_possible(parsed_cmd, path, envp);
 	check_access(parsed_cmd[0]);
 	if (ft_strchr(parsed_cmd[0], '/'))
 		execve(parsed_cmd[0], parsed_cmd, envp);
-	fd_printf(2, "bash: %s: %s\n", parsed_cmd[0], CMD_NOT_FOUND_STR);
+	fd_printf(2, "pipex: %s: %s\n", parsed_cmd[0], CMD_NOT_FOUND_STR);
 	exit(CMD_NOT_FOUND);
 }
 
@@ -61,7 +61,7 @@ static void	last_child(char *argv[], char *envp[], t_all *all)
 
 	check_close((all->left_fds)[1]);
 	check_dup2(all->left_fds[0], STDIN);
-	fd = open(argv[all->child_idx + 1], O_WRONLY | O_CREAT | O_TRUNC, 0755);
+	fd = open(argv[all->child_idx + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	check_open_fd(argv[all->child_idx + 1], fd);
 	check_dup2(fd, STDOUT);
 	work(argv, envp, all);

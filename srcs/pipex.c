@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:17:32 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 15:57:48 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:03:37 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	heredoc_main(int argc, char *argv[], char *envp[])
 	if (argc < 6)
 		return (err_exit("here_doc needs more than 4 arguments\n"));
 	read_heredoc(argv);
+	all.path = check_malloc2(get_path(envp));
 	all.child_idx = 2;
 	all.child_num = argc - 4;
 	pid = 1;
@@ -99,6 +100,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (err_exit("pipex needs more than 3 arguments\n"));
 	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
 		return (heredoc_main(argc, argv, envp));
+	all.path = check_malloc2(get_path(envp));
 	all.child_idx = 1;
 	all.child_num = argc - 3;
 	pid = 1;

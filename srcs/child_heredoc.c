@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:17:11 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/08 19:35:03 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:01:53 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	last_child_heredoc(char *argv[], char *envp[], t_all *all)
 
 	check_close((all->left_fds)[1]);
 	check_dup2(all->left_fds[0], STDIN);
-	fd = open(argv[all->child_idx + 1], O_WRONLY | O_CREAT | O_APPEND, 0755);
+	fd = open(argv[all->child_idx + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	check_open_fd(argv[all->child_idx + 1], fd);
 	check_dup2(fd, STDOUT);
 	work(argv, envp, all);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_err.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seunghoy <seunghoy@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:15:17 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/07 17:15:23 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:06:18 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_pipe(int *fds)
 {
 	if (pipe(fds) == 0)
 		return ;
-	perror("bash: pipe failed");
+	perror("pipex: pipe failed");
 	exit(EXIT_FAILURE);
 }
 
@@ -30,7 +30,7 @@ int	check_fork(void)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("bash: fork failed");
+		perror("pipex: fork failed");
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -41,7 +41,7 @@ void	check_close(int fd)
 {
 	if (close(fd) == 0)
 		return ;
-	perror("bash: close failed");
+	perror("pipex: close failed");
 	exit(EXIT_FAILURE);
 }
 
@@ -52,7 +52,7 @@ int	check_dup2(int fd1, int fd2)
 	re = dup2(fd1, fd2);
 	if (re != -1)
 		return (re);
-	perror("bash: dup2 failed");
+	perror("pipex: dup2 failed");
 	exit(EXIT_FAILURE);
 }
 
@@ -60,7 +60,7 @@ void	check_open_fd(char *path, int fd)
 {
 	if (fd != -1)
 		return ;
-	fd_printf(2, "bash: %s: ", path);
+	fd_printf(2, "pipex: %s: ", path);
 	perror("");
 	exit(EXIT_FAILURE);
 }
