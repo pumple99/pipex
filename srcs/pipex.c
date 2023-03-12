@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:17:32 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/12 17:30:27 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:47:10 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	read_heredoc(char *argv[])
 	check_open_fd(HEREDOC_TEMP, fd);
 	while (1)
 	{
+		write(1, "> ", 2);
 		line = check_gnl(get_next_line(0));
 		if (is_same_with_limiter(argv[2], line))
 		{
