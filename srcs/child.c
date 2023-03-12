@@ -6,18 +6,17 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:18:45 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/10 19:04:19 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 16:22:08 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h> //execve
 #include <fcntl.h> //open
-#include <stdio.h> //perror
 #include <stdlib.h> //exit
-#include "../pipex.h"
+#include "../pipex.h" //check_...
 #include "../libft/pf_printf.h" //fd_printf
 #include "../libft/libft.h" //ft_strchr
-#include "../pipex_consts.h"
+#include "../pipex_consts.h" //CMD_NOT_FOUND...
 
 void	work(char *argv[], char *envp[], t_all *all)
 {

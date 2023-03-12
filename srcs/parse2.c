@@ -6,12 +6,12 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 20:06:57 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 17:25:27 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 16:30:20 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h> //free, malloc
-#include "../pipex.h"
+#include "../pipex.h" //get_new_state
 
 /*str_arr: string array to be freed.
 num: the number of strings to be freed,

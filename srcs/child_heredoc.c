@@ -6,18 +6,13 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:17:11 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 19:01:53 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 16:19:18 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h> //execve
 #include <fcntl.h> //open
-#include <stdio.h> //perror
-#include <stdlib.h> //exit
-#include "../pipex.h"
-#include "../libft/pf_printf.h" //fd_printf
-#define STDIN 0
-#define STDOUT 1
+#include "../pipex.h" //check_open_fd ...
+#include "../pipex_consts.h" //STDIN ..
 
 static void	first_child_heredoc(char *argv[], char *envp[], t_all *all)
 {

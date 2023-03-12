@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:17:32 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/10 19:03:37 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:30:27 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <unistd.h> //pid_t write
 #include <stdlib.h> //free
 #include "../pipex.h" //...
+#include "../pipex_consts.h" //HEREDOC_TEMP
 #include "../libft/libft.h" //ft_strncmp ft_strput_fd ft_strlen
-#include "../libft/gnl.h" //gnl
+#include "../libft/gnl.h" //get_next_line
 
 static void	close_left_and_move(int *l, int *r, int idx)
 {
@@ -47,11 +48,11 @@ static void	read_heredoc(char *argv[])
 	int		fd;
 	char	*line;
 
-	fd = open(HEREDOC_TEMP, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+	fd = open(HEREDOC_TEMP, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	check_open_fd(HEREDOC_TEMP, fd);
 	while (1)
 	{
-		line = get_next_line(0);
+		line = check_gnl(get_next_line(0));
 		if (is_same_with_limiter(argv[2], line))
 		{
 			free(line);

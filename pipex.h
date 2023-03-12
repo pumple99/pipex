@@ -6,14 +6,12 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:16:42 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/10 19:02:18 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:42:09 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
-# define HEREDOC_TEMP ".here_doc_tmp"
 
 typedef struct s_all
 {
@@ -59,5 +57,6 @@ int		check_access(char *path);
 
 //error.c
 int		err_exit(char *str);
+int		perr_exit(char *str, int exit_status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:09:57 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/10 18:53:00 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:03:43 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h> //execve
 #include "../libft/libft.h" //ft_strncmp, ft_split
 #include "../libft/gnl.h" //get_next_line
-#include "../pipex.h" //parse_cmd
+#include "../pipex.h" //check_fork..
 
 static char	*char_join(char *s1, char *s2, char c)
 {
@@ -46,7 +46,7 @@ static void	make_default_path(void)
 
 	bash_args[0] = "bash";
 	bash_args[1] = "-c";
-	bash_args[2] = "echo $PATH > .tmp";
+	bash_args[2] = "echo $PATH > .default_path_tmp_file_312441";
 	bash_args[3] = 0;
 	execve("/bin/bash", bash_args, 0);
 	exit(EXIT_FAILURE);
@@ -58,14 +58,16 @@ static char	*default_path(void)
 	int		fd;
 	char	*temp;
 
-	pid = fork();
+	pid = check_fork();
 	if (pid == 0)
 		make_default_path();
-	wait(0);
-	fd = open(".tmp", O_RDONLY);
-	temp = get_next_line(fd);
-	close(fd);
-	unlink(".tmp");
+	if (wait(0) == -1)
+		perr_exit("bash: wait failed", EXIT_FAILURE);
+	fd = open(".default_path_tmp_file_312441", O_RDONLY);
+	check_open_fd(".default_path_tmp_file_312441", fd);
+	temp = check_gnl(get_next_line(fd));
+	check_close(fd);
+	unlink(".default_path_tmp_file_312441");
 	return (temp);
 }
 

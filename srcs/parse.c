@@ -6,11 +6,9 @@
 /*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 20:06:46 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/09 17:24:48 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/03/12 16:29:49 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../pipex.h"
 
 static int	prev_is_zero(char c)
 {
