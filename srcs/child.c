@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seunghoy <seunghoy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seunghoy <seunghoy@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:18:45 by seunghoy          #+#    #+#             */
-/*   Updated: 2023/03/12 16:22:08 by seunghoy         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:30:01 by seunghoy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ void	work(char *argv[], char *envp[], t_all *all)
 
 	path = all->path;
 	parsed_cmd = check_malloc2(parse_cmd(argv[all->child_idx]));
-	exe_if_possible(parsed_cmd, path, envp);
-	check_access(parsed_cmd[0]);
 	if (ft_strchr(parsed_cmd[0], '/'))
-		execve(parsed_cmd[0], parsed_cmd, envp);
+	{
+		if (check_access(parsed_cmd[0]) == 0)
+			execve(parsed_cmd[0], parsed_cmd, envp);
+		fd_printf(2, "pipex: %s: %s\n", parsed_cmd[0], NO_F_OR_D_STR);
+		exit(NO_F_OR_D);
+	}
+	else
+		exe_if_possible(parsed_cmd, path, envp);
 	fd_printf(2, "pipex: %s: %s\n", parsed_cmd[0], CMD_NOT_FOUND_STR);
 	exit(CMD_NOT_FOUND);
 }
